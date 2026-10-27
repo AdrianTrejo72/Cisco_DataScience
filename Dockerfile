@@ -8,11 +8,15 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/
 WORKDIR /CiscoData
 
 # Add uv to Path to install uv packages
-ENV PATH="/CiscoData/.env/bin:$PATH"
+ENV PATH="/CiscoData/.venv/bin:$PATH"
 
 # Copy dependency files first (better layer caching)
-COPY "pyproject.toml" "uv.lock" ".python-version" ./
-
+COPY pyproject.toml uv.lock .python-version README.md ./
 COPY Datasets/ /CiscoData/Datasets
+COPY src/cisco_datascience/ ./src/cisco_datascience/
 
-ENTRYPOINT ["python"]
+# Install dependencies
+RUN uv sync --locked
+
+#ENTRYPOINT ["python"]
+
