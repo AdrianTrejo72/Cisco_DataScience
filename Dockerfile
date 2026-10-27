@@ -13,6 +13,6 @@ ENV PATH="/CiscoData/.env/bin:$PATH"
 # Copy dependency files first (better layer caching)
 COPY "pyproject.toml" "uv.lock" ".python-version" ./
 
-COPY 02_PracticeDatasets/ /CiscoData/02_PracticeDatasets
+COPY Datasets/ /CiscoData/Datasets
 
 ENTRYPOINT ["python"]
